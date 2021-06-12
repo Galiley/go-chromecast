@@ -19,9 +19,9 @@ import (
 	"net"
 	"time"
 
-	log "github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 	castdns "github.com/vishen/go-chromecast/dns"
+	"github.com/vishen/go-chromecast/log"
 )
 
 // lsCmd represents the ls command

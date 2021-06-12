@@ -18,8 +18,8 @@ import (
 	"strconv"
 
 	"github.com/pkg/errors"
-	"github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
+	"github.com/vishen/go-chromecast/log"
 )
 
 // seekToCmd represents the seekTo command
@@ -32,16 +32,16 @@ var seekToCmd = &cobra.Command{
 		}
 		value, err := strconv.ParseFloat(args[0], 32)
 		if err != nil {
-			logrus.Printf("unable to parse %q to an integer\n", args[0])
+			log.Printf("unable to parse %q to an integer\n", args[0])
 			return nil
 		}
 		app, err := castApplication(cmd, args)
 		if err != nil {
-			logrus.Printf("unable to get cast application: %v\n", err)
+			log.Printf("unable to get cast application: %v\n", err)
 			return nil
 		}
 		if err := app.SeekToTime(float32(value)); err != nil {
-			logrus.Printf("unable to seek to current media: %v\n", err)
+			log.Printf("unable to seek to current media: %v\n", err)
 			return nil
 		}
 		return nil

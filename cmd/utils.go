@@ -12,7 +12,7 @@ import (
 	"strings"
 	"time"
 
-	log "github.com/sirupsen/logrus"
+	"github.com/vishen/go-chromecast/log"
 
 	"github.com/pkg/errors"
 	"github.com/spf13/cobra"
