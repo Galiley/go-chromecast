@@ -97,7 +97,7 @@ var watchCmd = &cobra.Command{
 			<-done
 			if retry {
 				// Sleep a little bit in-between retries
-				log.Infoln("attempting a retry...")
+				log.Info("attempting a retry...")
 				time.Sleep(time.Second * 10)
 			}
 		}

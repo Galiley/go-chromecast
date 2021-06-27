@@ -144,7 +144,7 @@ that ffmpeg is installed.`,
 
 		indexToPlayFrom := 0
 		if selection {
-			log.Println("Will play the following items, select where to start from:")
+			log.Print("Will play the following items, select where to start from:")
 			for i, f := range filenames {
 				lastPlayed := "never"
 				if lp, ok := app.PlayedItems()[f]; ok {

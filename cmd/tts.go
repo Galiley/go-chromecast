@@ -59,7 +59,7 @@ var ttsCmd = &cobra.Command{
 
 		data, err := tts.Create(args[0], b, languageCode, voiceName, speakingRate, pitch)
 		if err != nil {
-			log.Println(err)
+			log.Print(err.Error())
 			return
 		}
 
