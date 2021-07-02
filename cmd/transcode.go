@@ -31,7 +31,7 @@ The transcoded media content-type is required as well`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		app, err := castApplication(cmd, args)
 		if err != nil {
-			log.Printf("unable to get cast application: %v\n", err)
+			log.WithError(err).Errorf("unable to get cast application")
 			return nil
 		}
 
@@ -54,7 +54,7 @@ The transcoded media content-type is required as well`,
 		}
 
 		if err := app.Transcode(command, contentType); err != nil {
-			log.Printf("unable to transcode media: %v\n", err)
+			log.WithError(err).Errorf("unable to transcode media")
 			return nil
 		}
 		return nil

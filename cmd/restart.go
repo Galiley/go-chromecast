@@ -26,12 +26,12 @@ var restartCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		app, err := castApplication(cmd, args)
 		if err != nil {
-			log.Printf("unable to get cast application: %v\n", err)
+			log.WithError(err).Error("unable to get cast application")
 			return
 		}
 		// TODO(): THIS DOES NOT WORK
 		if err := app.SeekFromStart(0); err != nil {
-			log.Printf("unable to restart media: %v\n", err)
+			log.WithError(err).Error("unable to restart media")
 		}
 	},
 }

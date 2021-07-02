@@ -40,7 +40,7 @@ that ffmpeg is installed.`,
 		}
 		app, err := castApplication(cmd, args)
 		if err != nil {
-			log.WithError(err).Print("unable to get cast application")
+			log.WithError(err).Error("unable to get cast application")
 			return nil
 		}
 
@@ -66,7 +66,7 @@ that ffmpeg is installed.`,
 
 		// Otherwise just run in CLI mode:
 		if err := app.Load(args[0], contentType, transcode, detach, false); err != nil {
-			log.WithError(err).Print("unable to load media")
+			log.WithError(err).Error("unable to load media")
 			return nil
 		}
 		return nil

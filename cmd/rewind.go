@@ -32,16 +32,16 @@ var rewindCmd = &cobra.Command{
 		}
 		value, err := strconv.Atoi(args[0])
 		if err != nil {
-			log.Printf("unable to parse %q to an integer\n", args[0])
+			log.WithError(err).Errorf("unable to parse %q to an integer", args[0])
 			return nil
 		}
 		app, err := castApplication(cmd, args)
 		if err != nil {
-			log.Printf("unable to get cast application: %v\n", err)
+			log.WithError(err).Error("unable to get cast application")
 			return nil
 		}
 		if err := app.Seek(-value); err != nil {
-			log.Printf("unable to rewind current media: %v\n", err)
+			log.WithError(err).Error("unable to rewind current media")
 			return nil
 		}
 		return nil

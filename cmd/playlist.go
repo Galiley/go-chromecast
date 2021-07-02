@@ -51,15 +51,15 @@ that ffmpeg is installed.`,
 			return fmt.Errorf("requires exactly one argument, should be the folder to play media from")
 		}
 		if fileInfo, err := os.Stat(args[0]); err != nil {
-			log.Printf("unable to find %q: %v\n", args[0], err)
+			log.WithError(err).Errorf("unable to find %q", args[0])
 			return nil
 		} else if !fileInfo.Mode().IsDir() {
-			log.Printf("%q is not a directory\n", args[0])
+			log.Printf("%q is not a directory", args[0])
 			return nil
 		}
 		app, err := castApplication(cmd, args)
 		if err != nil {
-			log.Printf("unable to get cast application: %v\n", err)
+			log.WithError(err).Error("unable to get cast application")
 			return nil
 		}
 
@@ -70,7 +70,7 @@ that ffmpeg is installed.`,
 		selection, _ := cmd.Flags().GetBool("select")
 		files, err := ioutil.ReadDir(args[0])
 		if err != nil {
-			log.Printf("unable to list files from %q: %v", args[0], err)
+			log.WithError(err).Errorf("unable to list files from %q", args[0])
 			return nil
 		}
 		filesToPlay := make([]mediaFile, 0, len(files))
@@ -151,14 +151,14 @@ that ffmpeg is installed.`,
 					t := time.Unix(lp.Started, 0)
 					lastPlayed = t.String()
 				}
-				log.Printf("%d) %s: last played %q\n", i+1, f, lastPlayed)
+				log.Printf("%d) %s: last played %q", i+1, f, lastPlayed)
 			}
 			reader := bufio.NewReader(os.Stdin)
 			for {
-				log.Printf("Enter selection: ")
+				fmt.Printf("Enter selection: ")
 				text, err := reader.ReadString('\n')
 				if err != nil {
-					log.Printf("error reading console: %v\n", err)
+					fmt.Printf("error reading console: %v", err)
 					continue
 				}
 				i, err := strconv.Atoi(strings.TrimSpace(text))
@@ -218,7 +218,7 @@ that ffmpeg is installed.`,
 		}
 
 		if err := app.QueueLoad(filenames[indexToPlayFrom:], contentType, transcode); err != nil {
-			log.Printf("unable to play playlist on cast application: %v\n", err)
+			log.WithError(err).Error("unable to play playlist on cast application")
 			return nil
 		}
 		return nil

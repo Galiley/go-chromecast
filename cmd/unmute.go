@@ -26,11 +26,11 @@ var unmuteCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		app, err := castApplication(cmd, args)
 		if err != nil {
-			log.Printf("unable to get cast application: %v\n", err)
+			log.WithError(err).Error("unable to get cast application")
 			return
 		}
 		if err := app.SetMuted(false); err != nil {
-			log.Printf("unable to unmute cast application: %v\n", err)
+			log.WithError(err).Error("unable to unmute cast application")
 			return
 		}
 	},

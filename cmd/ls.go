@@ -16,6 +16,7 @@ package cmd
 
 import (
 	"context"
+	"fmt"
 	"net"
 	"time"
 
@@ -47,7 +48,7 @@ var lsCmd = &cobra.Command{
 		}
 		i := 1
 		for d := range castEntryChan {
-			log.Infof("%d) device=%q device_name=%q address=\"%s:%d\" uuid=%q", i, d.Device, d.DeviceName, d.AddrV4, d.Port, d.UUID)
+			fmt.Printf("%d) device=%q device_name=%q address=\"%s:%d\" uuid=%q\n", i, d.Device, d.DeviceName, d.AddrV4, d.Port, d.UUID)
 			i++
 		}
 		if i == 1 {

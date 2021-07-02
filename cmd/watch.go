@@ -91,7 +91,7 @@ var watchCmd = &cobra.Command{
 						"payload":        payload,
 					})
 				case outputNormal:
-					log.Infof("CHROMECAST BROADCAST MESSAGE: type=%s proto=%s (namespace=%s) %s -> %s | %s\n", messageType, protocolVersion, namespace, sourceID, destID, payload)
+					log.Infof("CHROMECAST BROADCAST MESSAGE: type=%s proto=%s (namespace=%s) %s -> %s | %s", messageType, protocolVersion, namespace, sourceID, destID, payload)
 				}
 			})
 			<-done
@@ -123,11 +123,11 @@ func outputStatus(app application.Application, outputType outputType) {
 		})
 	case outputNormal:
 		if castApplication == nil {
-			log.Infof("Idle, volume=%0.2f muted=%t\n", castVolume.Level, castVolume.Muted)
+			log.Infof("Idle, volume=%0.2f muted=%t", castVolume.Level, castVolume.Muted)
 		} else if castApplication.IsIdleScreen {
-			log.Infof("Idle (%s), volume=%0.2f muted=%t\n", castApplication.DisplayName, castVolume.Level, castVolume.Muted)
+			log.Infof("Idle (%s), volume=%0.2f muted=%t", castApplication.DisplayName, castVolume.Level, castVolume.Muted)
 		} else if castMedia == nil {
-			log.Infof("Idle (%s), volume=%0.2f muted=%t\n", castApplication.DisplayName, castVolume.Level, castVolume.Muted)
+			log.Infof("Idle (%s), volume=%0.2f muted=%t", castApplication.DisplayName, castVolume.Level, castVolume.Muted)
 		} else {
 			metadata := "unknown"
 			if castMedia.Media.Metadata.Title != "" {
@@ -138,7 +138,7 @@ func outputStatus(app application.Application, outputType outputType) {
 			case "x-youtube/video":
 				metadata = fmt.Sprintf("id=\"%s\", %s", castMedia.Media.ContentId, metadata)
 			}
-			log.Infof(">> %s (%s), %s, time remaining=%.2fs/%.2fs, volume=%0.2f, muted=%t\n", castApplication.DisplayName, castMedia.PlayerState, metadata, castMedia.CurrentTime, castMedia.Media.Duration, castVolume.Level, castVolume.Muted)
+			log.Infof(">> %s (%s), %s, time remaining=%.2fs/%.2fs, volume=%0.2f, muted=%t", castApplication.DisplayName, castMedia.PlayerState, metadata, castMedia.CurrentTime, castMedia.Media.Duration, castVolume.Level, castVolume.Muted)
 		}
 	}
 }

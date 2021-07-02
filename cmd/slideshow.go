@@ -32,23 +32,23 @@ var slideshowCmd = &cobra.Command{
 		}
 		for _, arg := range args {
 			if fileInfo, err := os.Stat(arg); err != nil {
-				log.Printf("unable to find %q: %v\n", arg, err)
+				log.WithError(err).Errorf("unable to find %q", arg)
 				return nil
 			} else if fileInfo.Mode().IsDir() {
-				log.Printf("%q is a directory\n", arg)
+				log.Printf("%q is a directory", arg)
 				return nil
 			}
 		}
 		app, err := castApplication(cmd, args)
 		if err != nil {
-			log.Printf("unable to get cast application: %v\n", err)
+			log.WithError(err).Errorf("unable to get cast application")
 			return nil
 		}
 
 		duration, _ := cmd.Flags().GetInt("duration")
 		repeat, _ := cmd.Flags().GetBool("repeat")
 		if err := app.Slideshow(args, duration, repeat); err != nil {
-			log.Printf("unable to play slideshow on cast application: %v\n", err)
+			log.WithError(err).Errorf("unable to play slideshow on cast application")
 			return nil
 		}
 		return nil

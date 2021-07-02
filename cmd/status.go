@@ -28,16 +28,16 @@ var statusCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		app, err := castApplication(cmd, args)
 		if err != nil {
-			log.Printf("unable to get cast application: %v\n", err)
+			log.WithError(err).Errorf("unable to get cast application")
 			return
 		}
 		castApplication, castMedia, castVolume := app.Status()
 		if castApplication == nil {
-			log.Printf("Idle, volume=%0.2f muted=%t\n", castVolume.Level, castVolume.Muted)
+			log.Printf("Idle, volume=%0.2f muted=%t", castVolume.Level, castVolume.Muted)
 		} else if castApplication.IsIdleScreen {
-			log.Printf("Idle (%s), volume=%0.2f muted=%t\n", castApplication.DisplayName, castVolume.Level, castVolume.Muted)
+			log.Printf("Idle (%s), volume=%0.2f muted=%t", castApplication.DisplayName, castVolume.Level, castVolume.Muted)
 		} else if castMedia == nil {
-			log.Printf("Idle (%s), volume=%0.2f muted=%t\n", castApplication.DisplayName, castVolume.Level, castVolume.Muted)
+			log.Printf("Idle (%s), volume=%0.2f muted=%t", castApplication.DisplayName, castVolume.Level, castVolume.Muted)
 		} else {
 			metadata := "unknown"
 			var usefulID string
@@ -49,7 +49,7 @@ var statusCmd = &cobra.Command{
 				md := castMedia.Media.Metadata
 				metadata = fmt.Sprintf("title=%q, artist=%q", md.Title, md.Artist)
 			}
-			log.Printf("%s%s (%s), %s, time remaining=%.0fs/%.0fs, volume=%0.2f, muted=%t\n", usefulID, castApplication.DisplayName, castMedia.PlayerState, metadata, castMedia.CurrentTime, castMedia.Media.Duration, castVolume.Level, castVolume.Muted)
+			log.Printf("%s%s (%s), %s, time remaining=%.0fs/%.0fs, volume=%0.2f, muted=%t", usefulID, castApplication.DisplayName, castMedia.PlayerState, metadata, castMedia.CurrentTime, castMedia.Media.Duration, castVolume.Level, castVolume.Muted)
 		}
 	},
 }
